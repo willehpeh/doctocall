@@ -1,0 +1,76 @@
+{
+  "name": "doctocall-doctor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "doctocall",
+  "sourceRoot": "apps/doctocall-doctor/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/doctocall-doctor",
+        "index": "apps/doctocall-doctor/src/index.html",
+        "browser": "apps/doctocall-doctor/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/doctocall-doctor/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/doctocall-doctor/src/favicon.ico",
+          "apps/doctocall-doctor/src/assets"
+        ],
+        "styles": ["apps/doctocall-doctor/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "doctocall-doctor:build:production"
+        },
+        "development": {
+          "buildTarget": "doctocall-doctor:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "doctocall-doctor:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "doctocall-doctor:build",
+        "staticFilePath": "dist/apps/doctocall-doctor/browser"
+      }
+    }
+  }
+}
